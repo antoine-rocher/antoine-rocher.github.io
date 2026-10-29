@@ -22,7 +22,7 @@ Open `index.html` and edit the block marked **EDIT YOUR CONTENT HERE** near the 
 - **Talks:** add one entry per talk in `talks` (newest first) with `when`, `title`, `event`, `place` and `kind` ("invited", "seminar" or "contributed"). Set `selected: true` on the ones shown under "Selected talks". Add `links: { Recording: "https://..." }` to link a recording or slides.
 - **Project images:** put pictures in `img/` and set `image: "img/your-picture.jpg"` on a research project. Add `credit: "..."` for an image credit, and `link` plus `linkLabel` for the link shown under the card.
 - **Hobbies:** each has an emoji `icon`, a `title` and a short `text`; add `image: "img/hiking.jpg"` to show a photo instead of the emoji.
-- **Background video:** the faint DESI flythrough behind the page uses `img/bg-desktop.*`, `img/bg-mobile.*` (smaller, for phones) and `img/bg-poster.jpg` (still frame). Set `backgroundVideo: null` to turn it off.
+- **Background video:** the faint DESI flythrough behind the page plays from YouTube on computers (`youtube`: the video id), from `img/bg-mobile.*` on phones, and shows `img/bg-poster.jpg` as a still frame for visitors who prefer reduced motion. Set `backgroundVideo: null` to turn it off.
 - **Hide something:** use `""` for a field or `[]` for a list (e.g. `talks: []` hides the Talks column).
 
 ## Custom domain (optional)

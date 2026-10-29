@@ -203,6 +203,9 @@
   .bg-video{position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none;
     opacity:.2; filter:invert(1) hue-rotate(180deg) saturate(1.4)}
   .bg-video video, .bg-video img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block}
+  /* YouTube player sized to cover the window, slightly enlarged so its title bar and edges fall off-screen */
+  .bg-video iframe{position:absolute; top:50%; left:50%; border:0;
+    width:max(100vw, 177.78vh); height:max(56.25vw, 100vh); transform:translate(-50%, -50%) scale(1.15)}
   @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .bg-video{opacity:.35; filter:none} }
   :root[data-theme="dark"] .bg-video{opacity:.35; filter:none}
 </style>
@@ -507,9 +510,9 @@ const SITE = {
   // Each size lists its files in order of preference; the poster is shown while loading and
   // instead of the video for visitors who ask for reduced motion or data saving.
   backgroundVideo: {
-    desktop: ["img/bg-desktop.mp4", "img/bg-desktop.webm"],
-    mobile:  ["img/bg-mobile.mp4", "img/bg-mobile.webm"],
-    poster:  "img/bg-poster.jpg"
+    youtube: "10AmLZT7Prg",                                // computers: streamed from YouTube in the best quality for the screen
+    mobile:  ["img/bg-mobile.mp4", "img/bg-mobile.webm"],  // phones: small file (YouTube rarely autoplays on phones)
+    poster:  "img/bg-poster.jpg"                           // still frame, shown while loading and for reduced motion
   },
   backgroundVideoCredit: "Background video: DESI map flythrough. Credit: DESI Collaboration and DESI Member Institutions/DOE/KPNO/NOIRLab/NSF/AURA/R. Proctor; image processing: M. Zamani (NSF NOIRLab)",
 
@@ -765,13 +768,21 @@ const SITE = {
   $("address").innerHTML = esc(S.address).replace(/\n/g, "<br>");
   $("copy").textContent = `© ${new Date().getFullYear()} ${S.name}`;
 
-  // Background video: a smaller file on phones, a still frame for reduced motion or data saving
+  // Background video: YouTube on computers, a small file on phones, a still frame for reduced motion or data saving
   const bv = S.backgroundVideo, box = document.querySelector(".bg-video");
   if (bv && box) {
     const small = matchMedia("(max-width: 760px)").matches;
     const still = matchMedia("(prefers-reduced-motion: reduce)").matches || (navigator.connection && navigator.connection.saveData);
+    const poster = bv.poster ? `<img src="${esc(bv.poster)}" alt="">` : "";
     const files = ((small && bv.mobile) || bv.desktop || bv.mobile || []).filter(Boolean);
-    if (still || !files.length) box.innerHTML = bv.poster ? `<img src="${esc(bv.poster)}" alt="">` : "";
+    if (still) box.innerHTML = poster;
+    else if (bv.youtube && !small) {
+      const id = encodeURIComponent(bv.youtube);
+      const q = `autoplay=1&mute=1&loop=1&playlist=${id}&controls=0&rel=0&playsinline=1&disablekb=1&fs=0&iv_load_policy=3&modestbranding=1`;
+      // the still frame sits under the player so nothing flashes black while YouTube loads
+      box.innerHTML = poster + `<iframe src="https://www.youtube-nocookie.com/embed/${id}?${q}" title="Background video" tabindex="-1" allow="autoplay; encrypted-media" referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
+    }
+    else if (!files.length) box.innerHTML = poster;
     else {
       box.innerHTML = `<video autoplay muted loop playsinline preload="auto"${bv.poster ? ` poster="${esc(bv.poster)}"` : ""}>` +
         files.map(f => `<source src="${esc(f)}" type="video/${/\.webm(\?|$)|^data:video\/webm/.test(f) ? "webm" : "mp4"}">`).join("") + `</video>`;
