@@ -1,0 +1,803 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Antoine Rocher · Cosmologist</title>
+<meta name="description" content="Antoine Rocher, cosmologist at EPFL: large-scale structure, galaxy–halo connection, DESI, 4MOST and WST.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fbfaf7; --surface:#ffffff; --text:#1d1f23; --muted:#5d636e; --line:#e6e3dc;
+    --accent:#1f4e79; --accent-soft:#e8eff6; --chip:#f1efe9;
+    --serif:"Playfair Display", Georgia, serif; --sans:"Inter", system-ui, -apple-system, sans-serif;
+    --maxw:1040px; --radius:12px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#111317; --surface:#181b21; --text:#e8e6e1; --muted:#9aa1ad; --line:#2a2e36;
+      --accent:#8fb8e0; --accent-soft:#1c2633; --chip:#22262e;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#111317; --surface:#181b21; --text:#e8e6e1; --muted:#9aa1ad; --line:#2a2e36;
+    --accent:#8fb8e0; --accent-soft:#1c2633; --chip:#22262e;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth; scroll-padding-top:72px}
+  body{margin:0; background:var(--bg); color:var(--text); font:16px/1.65 var(--sans); -webkit-font-smoothing:antialiased; font-variant-numeric:lining-nums}
+  a{color:var(--accent); text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 20px}
+
+  /* Nav — shares the night sky of the hero */
+  :root{ --night:#0f2236; --night-ink:#eef2f8; --night-muted:#a7b6ca; --night-line:rgba(255,255,255,.1); --sky-accent:#8fc4ee }
+  :focus-visible{outline:2px solid var(--sky-accent); outline-offset:3px; border-radius:4px}
+  header.nav{position:sticky; top:0; z-index:10; background:color-mix(in srgb, var(--night) 94%, transparent);
+    backdrop-filter:blur(8px); border-bottom:1px solid var(--night-line)}
+  .nav .wrap{display:flex; align-items:center; justify-content:space-between; height:60px; gap:16px}
+  .brand{font-family:var(--serif); font-weight:700; font-size:1.15rem; color:var(--night-ink)}
+  .brand:hover{text-decoration:none}
+  nav ul{display:flex; gap:22px; list-style:none; margin:0; padding:0}
+  nav a{color:var(--night-muted); font-size:.92rem; font-weight:500}
+  nav a:hover, nav a.active{color:#fff; text-decoration:none}
+  .nav-actions{display:flex; align-items:center; gap:8px}
+  .icon-btn{background:none; border:1px solid rgba(255,255,255,.18); color:var(--night-ink); border-radius:8px; width:36px; height:36px;
+    display:grid; place-items:center; cursor:pointer}
+  .icon-btn:hover{border-color:rgba(255,255,255,.45)}
+  .menu-btn{display:none}
+  @media (max-width:760px){
+    .menu-btn{display:grid}
+    nav ul{display:none; position:absolute; top:60px; left:0; right:0; flex-direction:column; gap:0;
+      background:var(--night); border-bottom:1px solid var(--night-line); padding:8px 20px}
+    nav ul.open{display:flex}
+    nav li a{display:block; padding:10px 0}
+  }
+
+  /* Hero — DESI's 3D map, blended onto the night blue */
+  .hero{position:relative; isolation:isolate; overflow:hidden; background:var(--night); color:var(--night-ink); padding:88px 0 26px}
+  /* Portrait on the left, text in the middle, DESI's map fanning out on the right */
+  .hero .photo{order:-1; position:relative}
+  .hero-grid::after{content:""; position:absolute; z-index:-1; pointer-events:none;
+    width:760px; aspect-ratio:600/411; right:-390px; top:50%; transform:translateY(-50%);
+    background:url("img/desi-3d-map.jpg") center / 100% 100% no-repeat; mix-blend-mode:screen; opacity:.95}
+  @media (max-width:1040px){ .hero-grid::after{opacity:.45} }
+  .hero::before{content:""; position:absolute; inset:0; z-index:-1; pointer-events:none;
+    background:linear-gradient(90deg, rgba(15,34,54,.9) 0%, rgba(15,34,54,.62) 34%, rgba(15,34,54,0) 64%)}
+  .hero-grid{position:relative; display:grid; grid-template-columns:220px minmax(0, 540px); justify-content:start; column-gap:56px; align-items:center}
+  .eyebrow{font-size:.95rem; color:var(--sky-accent); font-weight:500; margin:0 0 12px}
+  h1{font-family:var(--serif); font-size:clamp(2.4rem, 5.4vw, 3.6rem); line-height:1.05; margin:0 0 12px; font-weight:700; letter-spacing:-.01em}
+  .hero h1{color:#fff}
+  .role{font-size:1.15rem; color:var(--night-muted); margin:0 0 22px}
+  .tagline{font-family:var(--serif); font-size:1.22rem; line-height:1.6; max-width:34em; margin:0 0 30px; color:#d9e2ee}
+  .btns{display:flex; flex-wrap:wrap; gap:10px}
+  .btn{display:inline-flex; align-items:center; gap:8px; padding:10px 18px; border-radius:999px; font-weight:500; font-size:.92rem;
+    border:1px solid var(--line); color:var(--text); background:var(--surface)}
+  .btn:hover{text-decoration:none; border-color:var(--accent)}
+  .btn.primary{background:var(--accent); color:var(--bg); border-color:var(--accent)}
+  .hero .btn{background:rgba(15,34,54,.35); color:var(--night-ink); border-color:rgba(255,255,255,.3)}
+  .hero .btn:hover{border-color:#fff}
+  .hero .btn.primary{background:#f3f6fa; color:var(--night); border-color:#f3f6fa}
+  .hero .btn.primary:hover{background:#fff}
+  .portrait{width:220px; height:220px; border-radius:50%; object-fit:cover; display:block; border:3px solid rgba(255,255,255,.92);
+    box-shadow:0 0 0 10px rgba(255,255,255,.05), 0 18px 40px rgba(0,0,0,.35); background:var(--night)}
+  .initials{width:220px; height:220px; border-radius:50%; display:grid; place-items:center; background:rgba(255,255,255,.08);
+    color:#fff; font-family:var(--serif); font-size:4rem; font-weight:700}
+  .sky-credit{margin:56px 0 0; text-align:right; font-size:.76rem; color:rgba(167,182,202,.8)}
+  @media (max-width:760px){
+    .hero{padding:40px 0 20px}
+    .hero::before{background:linear-gradient(0deg, rgba(15,34,54,.94) 0%, rgba(15,34,54,.72) 52%, rgba(15,34,54,.15) 100%)}
+    .hero-grid{grid-template-columns:1fr; gap:26px}
+    .portrait,.initials{width:132px; height:132px; font-size:2.6rem}
+    /* on phones the photo sits on the map's zoom circle and the wedge opens beside it */
+    .hero-grid::after{display:none}
+    .hero .photo{--map-w:520px; justify-self:start}
+    .hero .photo::before{content:""; position:absolute; z-index:-1; pointer-events:none;
+      width:var(--map-w); aspect-ratio:600/411; left:calc(50% - var(--map-w) * .268); top:calc(50% - var(--map-w) * .313);
+      background:url("img/desi-3d-map.jpg") center / 100% 100% no-repeat; mix-blend-mode:screen; opacity:.6}
+    .sky-credit{text-align:left; margin-top:32px}
+  }
+
+  /* Sections */
+  section.block{padding:64px 0; border-bottom:1px solid var(--line)}
+  h2{font-family:var(--serif); font-size:1.9rem; margin:0 0 8px}
+  .lead{color:var(--muted); margin:0 0 32px; max-width:640px}
+  .about-grid{display:grid; grid-template-columns:1.5fr 1fr; gap:48px}
+  .about-grid p{margin:0 0 16px}
+  #about-text p{font-family:var(--serif); font-size:1.1rem; line-height:1.7}
+  .facts{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:22px 24px; align-self:start}
+  .facts dt{font-size:.75rem; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); font-weight:600; margin-top:14px}
+  .facts dt:first-child{margin-top:0}
+  .facts dd{margin:2px 0 0}
+  .chips{display:flex; flex-wrap:wrap; gap:6px; margin-top:6px}
+  .chip{background:var(--chip); border-radius:999px; padding:3px 10px; font-size:.82rem}
+  @media (max-width:760px){ .about-grid{grid-template-columns:1fr; gap:28px} }
+
+  .cards{display:grid; grid-template-columns:repeat(auto-fill, minmax(290px,1fr)); gap:20px}
+  .card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; display:flex; flex-direction:column}
+  .card a:has(> .thumb){display:block}
+  .card .thumb{display:block; aspect-ratio:16/9; background:linear-gradient(135deg, var(--accent-soft), var(--chip)); object-fit:cover; width:100%}
+  .card .body{padding:18px 20px 20px}
+  .card h3{font-family:var(--serif); font-size:1.2rem; margin:0 0 6px}
+  .card p{margin:0; color:var(--muted); font-size:.95rem}
+  .card .credit{margin-top:10px; font-size:.75rem; color:var(--muted); opacity:.85}
+  .card .thumb.contain{object-fit:contain; background:#fff; padding:8px}
+  .more-links{display:flex; flex-wrap:wrap; gap:4px 18px; margin-top:12px}
+  .card .more-links .more{margin-top:0}
+  .card .more{margin-top:12px; font-size:.9rem; font-weight:500}
+
+  /* Publications */
+  .pub-tools{display:flex; flex-wrap:wrap; align-items:center; gap:10px 20px; margin-bottom:24px}
+  .filter-group{display:flex; flex-wrap:wrap; gap:8px}
+  .filter-group + .filter-group{padding-left:20px; border-left:1px solid var(--line)}
+  .filter .count{font-size:.8em; opacity:.7; margin-left:3px}
+  .filter{border:1px solid var(--line); background:var(--surface); color:var(--muted); border-radius:999px; padding:6px 14px;
+    font:500 .85rem var(--sans); cursor:pointer}
+  .filter.on{background:var(--accent); color:var(--bg); border-color:var(--accent)}
+  .pubs{list-style:none; margin:0; padding:0}
+  .pub{display:grid; grid-template-columns:64px 1fr; gap:16px; padding:18px 0; border-top:1px solid var(--line)}
+  .pub:first-child{border-top:none}
+  .pub .year{font-family:var(--serif); font-weight:600; color:var(--muted)}
+  .pub .title{font-family:var(--serif); font-size:1.1rem; font-weight:600; margin:0 0 4px; color:var(--text)}
+  .pub .authors{font-size:.92rem; color:var(--muted); margin:0}
+  .pub .authors strong{color:var(--text)}
+  .pub .venue{font-size:.92rem; font-style:italic; margin:2px 0 0}
+  .pub .note{font-size:.88rem; color:var(--muted); margin:6px 0 0; padding-left:10px; border-left:2px solid var(--accent-soft)}
+  .pub .links{display:flex; gap:12px; margin-top:6px; font-size:.85rem; font-weight:500}
+  .badge{display:inline-block; font-size:.7rem; text-transform:uppercase; letter-spacing:.06em; background:var(--accent-soft);
+    color:var(--accent); padding:2px 8px; border-radius:6px; margin-left:8px; vertical-align:2px; font-family:var(--sans)}
+  .pub.talk{grid-template-columns:84px 1fr}
+  .pub.talk .place{font-size:.88rem; color:var(--muted); margin:2px 0 0}
+  @media (max-width:560px){
+    .pub, .pub.talk{grid-template-columns:1fr; gap:4px}
+    .filter-group + .filter-group{padding-left:0; border-left:none}
+  }
+
+  /* Timeline (teaching / talks) */
+  .two-col{display:grid; grid-template-columns:1fr 1fr; gap:48px}
+  @media (max-width:760px){ .two-col{grid-template-columns:1fr; gap:36px} }
+  h3.sub{font-family:var(--serif); font-size:1.3rem; margin:0 0 16px}
+  h4.subsub{font-size:.95rem; font-weight:600; color:var(--accent); margin:0 0 12px}
+  .timeline + h4.subsub{margin-top:12px}
+  .timeline{list-style:none; margin:0; padding:0; border-left:2px solid var(--line)}
+  .timeline li{position:relative; padding:0 0 20px 20px}
+  .timeline li[hidden]{display:none}
+  .show-more{background:none; border:none; padding:0; margin:0 0 24px 20px; color:var(--accent); font:500 .9rem var(--sans); cursor:pointer}
+  .show-more:hover{text-decoration:underline}
+  .timeline li::before{content:""; position:absolute; left:-7px; top:7px; width:12px; height:12px; border-radius:50%;
+    background:var(--bg); border:2px solid var(--accent)}
+  .timeline .when{font-size:.8rem; color:var(--muted); font-weight:600; letter-spacing:.04em}
+  .timeline .what{font-family:var(--serif); font-size:1.08rem; font-weight:600; line-height:1.4; margin:2px 0 3px}
+  .timeline .where{color:var(--muted); font-size:.92rem; margin:0}
+
+  /* Hobbies */
+  .hobbies{display:grid; grid-template-columns:repeat(auto-fill, minmax(160px,1fr)); gap:20px}
+  .hobby{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden}
+  .hobby img{width:100%; aspect-ratio:4/3; object-fit:cover; display:block}
+  .hobby .body{padding:18px 20px 20px}
+  .hobby .emoji{width:44px; height:44px; border-radius:10px; background:var(--accent-soft); display:grid; place-items:center;
+    font-size:1.4rem; margin-bottom:12px}
+  .hobby h3{font-family:var(--serif); font-size:1.15rem; margin:0 0 4px}
+  .hobby p{margin:0; color:var(--muted); font-size:.93rem}
+
+  /* Contact */
+  .contact{display:grid; grid-template-columns:1.2fr 1fr; gap:48px}
+  @media (max-width:760px){ .contact{grid-template-columns:1fr; gap:28px} }
+  .links-list{list-style:none; margin:0; padding:0; display:grid; gap:10px}
+  .links-list a{display:flex; align-items:center; gap:12px; padding:12px 16px; background:var(--surface);
+    border:1px solid var(--line); border-radius:10px; color:var(--text); font-weight:500}
+  .links-list a:hover{border-color:var(--accent); text-decoration:none}
+  .links-list svg{width:20px; height:20px; flex:none; color:var(--accent)}
+  address{font-style:normal; color:var(--muted)}
+
+  footer{padding:32px 0 48px; color:var(--muted); font-size:.85rem}
+  footer .wrap{display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px}
+  .video-credit{flex-basis:100%; margin:6px 0 0; font-size:.75rem; opacity:.8}
+  .video-credit:empty{display:none}
+
+  /* Background video, fixed behind the page. The top banner and the cards are opaque, so it shows
+     through the open parts of the page. In light mode the video is inverted (black space becomes white,
+     colours kept) so it reads as a faint pattern on the light page. */
+  .bg-video{position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none;
+    opacity:.2; filter:invert(1) hue-rotate(180deg) saturate(1.4)}
+  .bg-video video, .bg-video img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .bg-video{opacity:.35; filter:none} }
+  :root[data-theme="dark"] .bg-video{opacity:.35; filter:none}
+</style>
+</head>
+<body>
+<div class="bg-video" aria-hidden="true"></div>
+
+<script>
+/* ==========================================================================
+   ✏️  EDIT YOUR CONTENT HERE — everything on the page comes from this block.
+   Leave a field as "" (or an empty list []) to hide it.
+   ========================================================================== */
+const SITE = {
+  name: "Antoine Rocher",
+  shortName: "Antoine Rocher",       // shown top-left in the menu bar
+  role: "Cosmologist · Postdoctoral Researcher at LASTRO",
+  institution: "EPFL · Lausanne, Switzerland",
+  tagline: "I study the large-scale structure of the Universe and how galaxies trace dark matter, to test ΛCDM and look for new physics with DESI, 4MOST and the next generation of spectroscopic surveys.",
+  photo: "img/photo.jpg",            // put your picture here; falls back to initials if missing
+  cv: "",                            // your CV, e.g. "files/CV.pdf"; "" hides the button
+  email: "antoine.rocher [at] epfl.ch",  // written this way to reduce spam
+
+  about: [
+    "I am a cosmologist working on the large-scale structure of the Universe. My research focuses on the connection between galaxies and the dark matter halos they live in, and on using it to test the standard cosmological model, ΛCDM, and to search for signs of new physics.",
+    "I analyse data from large galaxy redshift surveys, in particular the Dark Energy Spectroscopic Instrument (DESI), and compare them with models built on numerical simulations. To get the most out of these data, I develop Bayesian inference and simulation-based inference methods, and I am the lead developer of HODDIES, a galaxy–halo connection code used within DESI and 4MOST.",
+    "Since 2024 I have been a scientific collaborator (postdoc) at EPFL, where I lead the preparation of the 4MOST cosmology survey, co-chair the target selection and survey design working group of the Wide-field Spectroscopic Telescope (WST), and supervise Master's and PhD students. I did my PhD at CEA Saclay – Université Paris-Saclay (2020–2023), working on the galaxy–halo connection of emission-line galaxies in DESI."
+  ],
+  facts: {
+    "Current position": "Scientific Collaborator (Postdoc), LASTRO, EPFL",
+    "Research impact": "37 publications · 4,500+ citations",
+    "Collaborations": "DESI (builder status) · 4MOST · WST · MUST",
+    "Education": [
+      "2023 — PhD, Cosmology & Astroparticles, CEA Saclay – Université Paris-Saclay",
+      "2019 — MSc Physics (Astrophysics), Université Claude Bernard Lyon 1"
+    ],
+    "Interests": ["Large-scale structure of the Universe", "Galaxy clustering", "Galaxy–halo connection", "HOD modelling", "Spectroscopic surveys", "Simulation-based inference", "Machine learning"]
+  },
+
+  research: [
+    { title: "Galaxy–halo connection",
+      text: "Modelling how galaxies populate dark matter halos with Halo Occupation Distribution models. I develop HODDIES, a fast code that builds galaxy mocks from any N-body simulation in seconds and fits HOD models to clustering and lensing data, including assembly bias, velocity bias and non-Poisson satellite statistics.",
+      image: "img/galaxy-halo-connection.svg", imageLink: "img/galaxy-halo-connection.svg",
+      alt: "Scheme of the galaxy–halo connection: halos of increasing mass host a central galaxy and more satellites, following the halo occupation distribution",
+      link: "https://github.com/antoine-rocher/HODDIES", linkLabel: "HODDIES on GitHub" },
+    { title: "Cosmology with DESI",
+      text: "Measuring and modelling galaxy clustering in DESI, with a focus on emission-line galaxies: small-scale clustering, the first observational test of halo assembly bias in ELGs, high-fidelity mocks for DR2, and quantifying modelling and spectroscopic systematics in the BAO and full-shape analyses.",
+      image: "img/desi-map.jpg", alt: "DESI's 3D map of the Universe shown above the Mayall Telescope at Kitt Peak",
+      credit: "DESI year-one data above the Mayall Telescope. Credit: DESI Collaboration/KPNO/NOIRLab/NSF/AURA/P. Horálek/R. Proctor",
+      link: "https://www.desi.lbl.gov/", linkLabel: "Visit the DESI website" },
+    { title: "The 4MOST Cosmology Redshift Survey",
+      text: "Leading the scientific preparation and survey validation of the 4MOST cosmology survey: target selection of bright galaxies and luminous red galaxies, sample purity, correction of selection biases, and clustering of the target catalogues.",
+      image: "img/4most-first-light.jpg", alt: "4MOST first-light field around the Sculptor Galaxy, with fibre positions and two example spectra",
+      credit: "4MOST first light around NGC 253 and NGC 288. Credit: AIP/R. de Jong, CRAL/J.-K. Krogager, background: Harshwardhan Pathak/Telescope Live",
+      link: "https://www.4most.eu/cms/home/", linkLabel: "Visit the 4MOST website" },
+    { title: "Designing Stage-V surveys: WST & MUST",
+      text: "As co-chair of WST's target selection and survey design group, I work on how to select high-redshift targets and design future spectroscopic surveys so that instrumental choices translate into the best possible cosmological constraints.",
+      image: "img/wst-survey.jpg", fit: "contain",
+      alt: "Survey wedge showing the redshift range covered by WST tracers, from bright galaxies to Lyman-alpha emitters, out to the cosmic microwave background",
+      links: [ { label: "Visit the WST website", url: "https://wstelescope.eu/" },
+               { label: "Visit the MUST website", url: "https://must.astro.tsinghua.edu.cn/en" } ] },
+    { title: "Simulation-based inference & machine learning",
+      text: "Developing inference methods that make the most of the data, from Gaussian-process fitting and neural-network emulators to normalizing flows for photometric redshifts. As a member of DESI's Alternative Clustering Methods (ACM) group, I work on the marked power spectrum, a new statistic to probe modified gravity.",
+      image: "img/sbi-ml.jpg", fit: "contain", imageLink: "img/sbi-ml.jpg",
+      alt: "Simulation-based inference pipeline: forward-modelled galaxy surveys compressed with a convolutional neural network, a normalizing flow, and the resulting cosmological constraints",
+      credit: "Figure adapted from SimBIG (Hahn et al. 2023; Lemos et al. 2024)",
+      link: "https://acm.readthedocs.io/en/latest/pipeline/overview.html", linkLabel: "The ACM pipeline" }
+  ],
+
+  // Publications. `selected: true` → shown under "Selected". `status` → small badge (e.g. "submitted").
+  // "Major contributions" lists papers where `highlightAuthor` is among the first three authors
+  // (add `major: true` or `major: false` to override). `note` → short line describing your role.
+  highlightAuthor: "A. Rocher",
+  publications: [
+    { year: 2026, status: "accepted", title: "Exploring non-Poisson satellite occupation in HOD models and its impact on 2- and 3-point galaxy clustering",
+      authors: "A. Rocher", venue: "Accepted in Journal of Cosmology and Astroparticle Physics",
+      note: "Built a Conway–Maxwell–Poisson model to test the Poisson assumption for satellite galaxies and its impact on 2- and 3-point clustering.",
+      links: { arXiv: "https://arxiv.org/abs/2605.28644" }, selected: true },
+    { year: 2026, status: "submitted", title: "HODDIES: Dressing up halos with galaxies – an efficient HOD code for Stage-IV cosmological surveys",
+      authors: "A. Rocher", venue: "Submitted to Journal of Cosmology and Astroparticle Physics",
+      note: "Designed a fast, flexible code to generate HOD mocks from any N-body simulation and fit them to clustering and lensing data.",
+      links: { Code: "https://github.com/antoine-rocher/HODDIES" } },
+    { year: 2026, status: "in prep.", title: "AbacusHF: A High-Fidelity AbacusSummit HOD Mock Suite for DESI DR2",
+      authors: "H. Zhang, A. Rocher, et al.", venue: "In preparation for Journal of Cosmology and Astroparticle Physics",
+      note: "Tracer-specific HOD mocks for all DESI DR2 tracers, used to validate the collaboration's clustering pipelines.",
+      links: {} },
+    { year: 2026, status: "submitted", title: "Beyond point photo-z estimates: Normalizing flows for tomographic N(z) reconstruction with DESI DR1",
+      authors: "Z. Chen, A. Rocher, et al.", venue: "Submitted to Monthly Notices of the Royal Astronomical Society",
+      note: "Normalizing flows trained on DESI DR1 to reconstruct tomographic redshift distributions from full photo-z PDFs.",
+      links: {} },
+    { year: 2026, status: "submitted", selected: true, title: "Targeting the future of spectroscopic surveys with a WST case cosmological study",
+      authors: "C. Payerne, A. Rocher, et al.", venue: "Submitted to Monthly Notices of the Royal Astronomical Society",
+      note: "An optimisation framework linking target selection and survey design to cosmological constraints for Stage-V surveys.",
+      links: {} },
+    { year: 2026, title: "The Impact of Spectroscopic Redshift Errors on Cosmological Measurements",
+      authors: "S. He, J. Yu, A. Rocher, et al.", venue: "Journal of Cosmology and Astroparticle Physics",
+      note: "Modelled redshift errors in simulations; supervised the project.",
+      links: { Journal: "https://doi.org/10.1088/1475-7516/2026/02/040", arXiv: "https://arxiv.org/abs/2508.21182" } },
+    { year: 2026, title: "The 4MOST-Cosmology Redshift Survey: target selection of bright galaxies and luminous red galaxies",
+      authors: "A. Verdier, A. Rocher, B. Bandi, J. Richard, B. F. Roukema, J. Loveday, E. Tempel, M. Bilicki, J.-P. Kneib, M. Guitton", venue: "Monthly Notices of the Royal Astronomical Society, 545, staf2116",
+      note: "Designed the bright-galaxy selection, estimated sample purity and corrected selection biases; supervised the project.",
+      links: { Journal: "https://doi.org/10.1093/mnras/staf2116", arXiv: "https://arxiv.org/abs/2508.07311" }, selected: true },
+    { year: 2026, title: "4MOST Cosmology Redshift Survey (CRS): Clustering properties of CRS BG and LRG target catalogues",
+      authors: "B. Bandi, A. Rocher, A. Verdier, J. Loveday, Z. Chen, J. Richard, J.-P. Kneib, T. Shanks, M. J. I. Brown", venue: "Monthly Notices of the Royal Astronomical Society, stag407",
+      note: "Angular clustering tests, galaxy bias measurements and HOD fitting with photometric redshifts; supervised the project.",
+      links: { Journal: "https://doi.org/10.1093/mnras/stag407", arXiv: "https://arxiv.org/abs/2510.02449" } },
+    { year: 2025, title: "Enhancing DESI DR1 Full-Shape analyses using HOD-informed priors",
+      authors: "H. Zhang, M. Bonici, A. Rocher, et al.", venue: "Journal of Cosmology and Astroparticle Physics",
+      note: "Created the simulations used in the analysis.",
+      links: { Journal: "https://doi.org/10.1088/1475-7516/2025/11/049", arXiv: "https://arxiv.org/abs/2504.10407" } },
+    { year: 2025, title: "ELG Spectroscopic Systematics Analysis of the DESI Data Release 1",
+      authors: "J. Yu, A. J. Ross, A. Rocher, et al.", venue: "Journal of Cosmology and Astroparticle Physics",
+      note: "Designed and contributed to the spectroscopic success rate tests.",
+      links: { arXiv: "https://arxiv.org/abs/2405.16657" } },
+    { year: 2024, title: "HOD-Dependent Systematics in Emission Line Galaxies for the DESI 2024 BAO analysis",
+      authors: "C. Garcia-Quintero, J. Mena-Fernández, A. Rocher, et al.", venue: "Journal of Cosmology and Astroparticle Physics",
+      note: "Designed and created the simulations used to quantify HOD modelling errors.",
+      links: { arXiv: "https://arxiv.org/abs/2404.03009" } },
+    { year: 2024, selected: true, title: "Impact of assembly bias on clustering plus weak lensing cosmological analysis",
+      authors: "R. Paviot, A. Rocher, S. Codis, A. de Mattia, E. Jullo, S. de la Torre", venue: "Astronomy & Astrophysics, 690, A221",
+      note: "HOD fitting to observational data with my codes; ideas and tests on assembly bias.",
+      links: { Journal: "https://www.aanda.org/articles/aa/full_html/2024/10/aa49574-24/aa49574-24.html", arXiv: "https://arxiv.org/abs/2402.07715" } },
+    { year: 2023, title: "The DESI One-Percent survey: exploring the Halo Occupation Distribution of Emission Line Galaxies with AbacusSummit simulations",
+      authors: "A. Rocher, V. Ruhlmann-Kleider, E. Burtin, S. Yuan, A. de Mattia, A. J. Ross, et al.", venue: "Journal of Cosmology and Astroparticle Physics, 10, 016",
+      note: "HOD study of DESI ELGs with validation data, including conformity bias and the first observational test of assembly bias in ELGs.",
+      links: { Journal: "https://doi.org/10.1088/1475-7516/2023/10/016", arXiv: "https://arxiv.org/abs/2306.06319" }, selected: true },
+    { year: 2023, title: "Halo Occupation Distribution of Emission Line Galaxies: fitting method with Gaussian Processes",
+      authors: "A. Rocher, V. Ruhlmann-Kleider, E. Burtin, A. de Mattia", venue: "Journal of Cosmology and Astroparticle Physics, 05, 033",
+      note: "An iterative Gaussian-process fitting technique for stochastic, expensive models, applied to ELG HOD modelling.",
+      links: { Journal: "https://doi.org/10.1088/1475-7516/2023/05/033", arXiv: "https://arxiv.org/abs/2302.07056" } },
+    { year: 2023, title: "Toward an improved interpretation of the galaxy–halo connection for emission-line galaxies in the DESI spectroscopic survey",
+      authors: "A. Rocher", venue: "PhD Thesis, CEA Saclay – Université Paris-Saclay",
+      links: { HAL: "https://theses.hal.science/tel-04268688" } },
+    // ---- Collaboration and co-authored papers ----
+    { year: 2026, status: "preprint", title: "Field-level inference of growth rate from DESI BGS galaxy and ZTF supernova simulations",
+      authors: "C. Ravoux, B. Carreres, J. Bautista, et al.", venue: "arXiv preprint",
+      links: { arXiv: "https://arxiv.org/abs/2609.34508" } },
+    { year: 2026, title: "MUltiplexed Survey Telescope (MUST) science white paper I: Overview of large-scale structure cosmology in the era of Stage-V spectroscopic surveys",
+      authors: "C. Zhao, S. Huang, M. He, et al.", venue: "Science China Physics, Mechanics & Astronomy",
+      links: { Journal: "https://doi.org/10.1007/s11433-026-2998-9", arXiv: "https://arxiv.org/abs/2411.07970" } },
+    { year: 2026, title: "Fiducial-cosmology-dependent systematics for the DESI 2024 full-shape analysis",
+      authors: "R. Gsponer, S. Ramirez-Solano, F. Rodríguez-Martínez, et al.", venue: "Journal of Cosmology and Astroparticle Physics",
+      links: { Journal: "https://doi.org/10.1088/1475-7516/2026/06/010", arXiv: "https://arxiv.org/abs/2509.08057" } },
+    { year: 2026, title: "DESI DR2 reference mocks: clustering results from Uchuu-BGS and LRG",
+      authors: "E. Fernández-García, F. Prada, A. Smith, et al.", venue: "Journal of Cosmology and Astroparticle Physics",
+      links: { Journal: "https://doi.org/10.1088/1475-7516/2026/05/002", arXiv: "https://arxiv.org/abs/2507.01593" } },
+    { year: 2026, title: "Data Release 1 of the Dark Energy Spectroscopic Instrument",
+      authors: "DESI Collaboration", venue: "The Astronomical Journal",
+      links: { Journal: "https://doi.org/10.3847/1538-3881/ae4c43", arXiv: "https://arxiv.org/abs/2503.14745" } },
+    { year: 2025, title: "Exploring HOD-dependent systematics for the DESI 2024 Full-Shape galaxy clustering analysis",
+      authors: "N. Findlay, S. Nadathur, W. J. Percival, et al.", venue: "Journal of Cosmology and Astroparticle Physics",
+      links: { Journal: "https://doi.org/10.1088/1475-7516/2025/09/007", arXiv: "https://arxiv.org/abs/2411.12023" } },
+    { year: 2025, title: "DESI DR2 Results II: Measurements of Baryon Acoustic Oscillations and Cosmological Constraints",
+      authors: "DESI Collaboration", venue: "Physical Review D",
+      links: { arXiv: "https://arxiv.org/abs/2503.14738" } },
+    { year: 2025, title: "DESI 2024 VII: Cosmological Constraints from the Full-Shape Modeling of Clustering Measurements",
+      authors: "DESI Collaboration", venue: "Journal of Cosmology and Astroparticle Physics",
+      links: { arXiv: "https://arxiv.org/abs/2411.12022" } },
+    { year: 2025, title: "DESI 2024 VI: Cosmological Constraints from the Measurements of Baryon Acoustic Oscillations",
+      authors: "DESI Collaboration", venue: "Journal of Cosmology and Astroparticle Physics",
+      links: { arXiv: "https://arxiv.org/abs/2404.03002" } },
+    { year: 2025, title: "DESI 2024 V: Full-Shape Galaxy Clustering from Galaxies and Quasars",
+      authors: "DESI Collaboration", venue: "Journal of Cosmology and Astroparticle Physics",
+      links: { arXiv: "https://arxiv.org/abs/2411.12021" } },
+    { year: 2025, title: "DESI 2024 IV: Baryon Acoustic Oscillations from the Lyman Alpha Forest",
+      authors: "DESI Collaboration", venue: "Journal of Cosmology and Astroparticle Physics",
+      links: { arXiv: "https://arxiv.org/abs/2404.03001" } },
+    { year: 2025, title: "DESI 2024 III: Baryon Acoustic Oscillations from Galaxies and Quasars",
+      authors: "DESI Collaboration", venue: "Journal of Cosmology and Astroparticle Physics",
+      links: { arXiv: "https://arxiv.org/abs/2404.03000" } },
+    { year: 2025, title: "DESI 2024 II: Sample Definitions, Characteristics, and Two-point Clustering Statistics",
+      authors: "DESI Collaboration", venue: "Journal of Cosmology and Astroparticle Physics",
+      links: { arXiv: "https://arxiv.org/abs/2411.12020" } },
+    { year: 2025, title: "An analysis of parameter compression and Full-Modeling techniques with Velocileptors for DESI 2024 and beyond",
+      authors: "M. Maus et al.", venue: "Journal of Cosmology and Astroparticle Physics",
+      links: { arXiv: "https://arxiv.org/abs/2404.07312" } },
+    { year: 2025, title: "A comparison of effective field theory models of redshift space galaxy power spectra for DESI 2024 and future surveys",
+      authors: "M. Maus et al.", venue: "Journal of Cosmology and Astroparticle Physics",
+      links: { arXiv: "https://arxiv.org/abs/2404.07272" } },
+    { year: 2025, title: "Comparing Compressed and Full-Modeling analyses with FOLPS: implications for DESI 2024 and beyond",
+      authors: "H. E. Noriega et al.", venue: "Journal of Cosmology and Astroparticle Physics",
+      links: { arXiv: "https://arxiv.org/abs/2404.07269" } },
+    { year: 2025, title: "Fiducial-cosmology-dependent systematics for the DESI 2024 BAO analysis",
+      authors: "A. Pérez-Fernández et al.", venue: "Journal of Cosmology and Astroparticle Physics",
+      links: { arXiv: "https://arxiv.org/abs/2406.06085" } },
+    { year: 2025, title: "HOD-dependent systematics for luminous red galaxies in the DESI 2024 BAO analysis",
+      authors: "J. Mena-Fernández et al.", venue: "Journal of Cosmology and Astroparticle Physics",
+      links: { arXiv: "https://arxiv.org/abs/2404.03008" } },
+    { year: 2025, title: "Unraveling emission line galaxy conformity at z ∼ 1 with DESI early data",
+      authors: "S. Yuan, R. H. Wechsler, Y. Wang, M. A. C. de los Reyes, J. Myles, A. Rocher, et al.", venue: "",
+      links: { arXiv: "https://arxiv.org/abs/2310.09329" } },
+    { year: 2024, title: "The DESI one-per cent survey: exploring the halo occupation distribution of luminous red galaxies and quasi-stellar objects with AbacusSummit",
+      authors: "S. Yuan et al.", venue: "Monthly Notices of the Royal Astronomical Society, 530, 947",
+      links: { Journal: "https://doi.org/10.1093/mnras/stae359", arXiv: "https://arxiv.org/abs/2306.06314" } },
+    { year: 2024, title: "The Early Data Release of the Dark Energy Spectroscopic Instrument",
+      authors: "DESI Collaboration", venue: "The Astronomical Journal",
+      links: { arXiv: "https://arxiv.org/abs/2306.06308" } },
+    { year: 2024, title: "Validation of the Scientific Program for the Dark Energy Spectroscopic Instrument",
+      authors: "DESI Collaboration", venue: "The Astronomical Journal",
+      links: { arXiv: "https://arxiv.org/abs/2306.06307" } },
+    { year: 2024, status: "white paper", title: "The Wide-field Spectroscopic Telescope (WST) Science White Paper",
+      authors: "V. Mainieri et al.", venue: "arXiv preprint",
+      links: { arXiv: "https://arxiv.org/abs/2403.05398" } },
+    { year: 2023, title: "The DESI One-Percent Survey: exploring a generalized SHAM for multiple tracers with the UNIT simulation",
+      authors: "J. Yu et al.", venue: "Monthly Notices of the Royal Astronomical Society",
+      links: { arXiv: "https://arxiv.org/abs/2306.06313" } },
+    { year: 2023, title: "The DESI Survey Validation: Results from Visual Inspection of Bright Galaxies, Luminous Red Galaxies, and Emission-line Galaxies",
+      authors: "T.-W. Lan et al.", venue: "The Astrophysical Journal",
+      links: { arXiv: "https://arxiv.org/abs/2208.08516" } },
+    { year: 2022, title: "Overview of the Instrumentation for the Dark Energy Spectroscopic Instrument",
+      authors: "DESI Collaboration", venue: "The Astronomical Journal",
+      links: { arXiv: "https://arxiv.org/abs/2205.10939" } }
+  ],
+  // Talks, newest first. kind: "invited", "seminar" or "contributed". `selected: true` → shown under "Selected talks".
+  // Optional `links`, e.g. { Recording: "https://...", Slides: "files/slides.pdf" }.
+  talks: [
+    { when: "Jun 2026", title: "4MOST Cosmology Redshift Survey: survey design, clustering tests, and early science validation results",
+      event: "European Astronomical Society Annual Meeting (EAS)", place: "Lausanne, Switzerland", kind: "contributed", selected: true },
+    { when: "Apr 2026", title: "Cosmology with Stage-V galaxy redshift surveys",
+      event: "MUST France meeting", place: "Marseille, France", kind: "contributed", selected: true },
+    { when: "Jun 2025", title: "Overview of the DESI survey and clustering measurements from DR1 & DR2",
+      event: "Swiss Cosmology Days", place: "Zurich, Switzerland", kind: "contributed", selected: true },
+    { when: "Jun 2025", title: "Overview of the DESI survey and clustering measurements from DR1 & DR2",
+      event: "CosmoFONDUE: Cosmological Fundamental Observables and Novel Discoveries in Universe Evolution", place: "Geneva, Switzerland", kind: "contributed" },
+    { when: "Feb 2025", title: "The DESI 1% survey: Halo Occupation Distribution of Emission Line Galaxies",
+      event: "ELG mock challenge workshop", place: "San Sebastián, Spain", kind: "invited" },
+    { when: "Dec 2024", title: "Galaxy–halo connection in galaxy redshift surveys",
+      event: "Seminar at CRAL", place: "Lyon, France", kind: "seminar", selected: true,
+      links: { Recording: "https://cral.osu-lyon.fr/2024/12/20/seminaire-antoine-rocher-epfl-switzerland/" } },
+    { when: "Dec 2024", title: "Update on mock generation for DESI DR2",
+      event: "DESI Collaboration Meeting", place: "Cancún, Mexico (remote)", kind: "contributed" },
+    { when: "Oct 2024", title: "The DESI 1% survey: Halo Occupation Distribution of Emission Line Galaxies",
+      event: "Mock Barcelona", place: "Barcelona, Spain", kind: "invited", selected: true },
+    { when: "May 2024", title: "Presentation of the 4MOST-CRS programme",
+      event: "CNRS research group of Cosmological Physics (GDR CoPhy)", place: "Lyon, France", kind: "contributed" },
+    { when: "Feb 2024", title: "Update from DESI: what can we learn for 4MOST",
+      event: "4MOST Science Team Meeting", place: "Uppsala, Sweden", kind: "contributed" },
+    { when: "Apr 2023", title: "The DESI 1% survey: Halo Occupation Distribution of Emission Line Galaxies",
+      event: "KASI Early Career Researcher Cosmology Seminar, Korea Astronomy and Space Science Institute", place: "Remote", kind: "seminar", selected: true,
+      links: { Recording: "https://www.youtube.com/watch?v=v6O8NJJu-kg&t=3427s" } },
+    { when: "Jan 2023", title: "Galaxy–halo connection with Emission Line Galaxies in DESI",
+      event: "LASTRO-EPFL Seminar", place: "Lausanne, Switzerland", kind: "seminar" },
+    { when: "Jan 2023", title: "DESI first results with Early Data",
+      event: "CNRS research group of Cosmological Physics (GDR CoPhy)", place: "Paris, France", kind: "invited" },
+    { when: "Jan 2023", title: "DESI ELGs: Status and Early Results",
+      event: "American Astronomical Society 241st Winter Meeting (AAS 241)", place: "Seattle, USA", kind: "invited", selected: true },
+    { when: "Dec 2022", title: "Halo Occupation Distribution of Emission Line Galaxies in DESI data",
+      event: "DESI Collaboration Meeting", place: "Cancún, Mexico", kind: "contributed" },
+    { when: "Aug 2022", title: "Galaxy–halo connection in cosmology",
+      event: "Euclid Summer School", place: "Banyuls, France", kind: "contributed" },
+    { when: "Jun 2022", title: "Galaxy–halo connection with Emission Line Galaxies in DESI data",
+      event: "European Astronomical Society Annual Meeting (EAS)", place: "Valencia, Spain", kind: "contributed" },
+    { when: "Jun 2022", title: "Halo Occupation Distribution of Emission Line Galaxies in DESI data",
+      event: "DESI Collaboration Meeting", place: "Berkeley, USA", kind: "contributed" },
+    { when: "May 2022", title: "Galaxy–halo connection in cosmology",
+      event: "Doctoral School Festival: PHENIICS FEST", place: "Paris, France", kind: "contributed" },
+    { when: "May 2022", title: "Galaxy–halo connection with Emission Line Galaxies in DESI",
+      event: "Action Dark Energy Meeting (ADE)", place: "Marseille, France", kind: "contributed" },
+    { when: "May 2022", title: "Galaxy–halo connection with Emission Line Galaxies in DESI",
+      event: "DESI France Meeting", place: "Marseille, France", kind: "contributed" }
+  ],
+
+  allPublicationsLink: { label: "Complete list on NASA ADS", url: "https://ui.adsabs.harvard.edu/search/fq=%7B!type%3Daqp%20v%3D%24fq_database%7D&fq_database=(database%3Aastronomy%20OR%20database%3Aphysics)&p_=0&q=((author%3A%22Rocher%2C%20Antoine%22)%20AND%20year%3A2018-)&sort=date%20desc%2C%20bibcode%20desc" },
+
+  // Columns of the "Teaching & Supervision" section. Add, remove or reorder freely.
+  activities: [
+    // a column can hold one list (`items`) or several sub-sections (`groups`)
+    { title: "Teaching", groups: [
+      { title: "Summer schools", items: [
+        { when: "2026", what: "Galaxy clustering observation", where: "Euclid Summer School — lectures (8h)" }
+      ]},
+      { title: "EPFL", items: [
+        { when: "2025 –", what: "Astrophysics I: Introduction to Astrophysics", where: "Teaching assistant & lecturer — undergraduate lectures and tutorials (35h)" },
+        { when: "2024 –", what: "Astrophysics V: Observational Cosmology", where: "Teaching assistant & lecturer — Master's lectures and tutorials (35h)" },
+        { when: "2024 –", what: "Master's physics projects (TP4)", where: "Small research projects (1 day a week, 15 weeks). Topics proposed: cosmic dipole, simulation-based inference, halo finders and halo profiles, 4MOST target selection, marked power spectrum" }
+      ]}
+    ]},
+    { title: "Supervision at EPFL", groups: [
+      { title: "PhD students (co-supervision)", items: [
+        { when: "2024 – 2028", what: "Impact of spectroscopic errors on cosmological analyses", where: "Shengyu He" },
+        { when: "2022 – 2026", what: "Target selection for future galaxy surveys", where: "Aurélien Verdier" }
+      ]},
+      { title: "Master's projects", show: 3, items: [   // `show: 3` → the 3 most recent, with a button for the rest
+        { when: "Sep 2026 – Feb 2027", what: "Assessing the redshift success rate of 4MOST cosmological tracers from survey validation data", where: "Luca Krattinger" },
+        { when: "Feb – Dec 2026", what: "Studying modified gravity with N-body simulations", where: "Thibault Biel (co-supervision)" },
+        { when: "Feb – Jul 2026", what: "Improving QSO selection with machine learning methods", where: "Adele Saliou" },
+        { when: "Apr – Jul 2025", what: "Modelling the spatial distribution of ELGs in DESI using neural networks", where: "Louis Bersegol" },
+        { when: "Sep 2024 – Jun 2025", what: "Photometric redshift clustering of galaxy targets from the 4MOST-Cosmology Redshift Survey", where: "Zhuo Chen" }
+      ]}
+    ]}
+  ],
+
+  // Hobbies: emoji or "" for icon, optional image (e.g. "img/hiking.jpg"). Set to [] to hide the section.
+  hobbies: [
+    { icon: "🥾", title: "Hiking", text: "", image: "" },
+    { icon: "⛷️", title: "Ski", text: "", image: "" },
+    { icon: "🧘", title: "Yoga", text: "", image: "" },
+    { icon: "🍳", title: "Cooking", text: "", image: "" },
+    { icon: "🚐", title: "Van trips", text: "", image: "" }
+  ],
+
+  // Faint background video behind the page (below the top banner). Set to null to turn it off.
+  // Each size lists its files in order of preference; the poster is shown while loading and
+  // instead of the video for visitors who ask for reduced motion or data saving.
+  backgroundVideo: {
+    desktop: ["img/bg-desktop.mp4", "img/bg-desktop.webm"],
+    mobile:  ["img/bg-mobile.mp4", "img/bg-mobile.webm"],
+    poster:  "img/bg-poster.jpg"
+  },
+  backgroundVideoCredit: "Background video: DESI map flythrough. Credit: DESI Collaboration and DESI Member Institutions/DOE/KPNO/NOIRLab/NSF/AURA/R. Proctor; image processing: M. Zamani (NSF NOIRLab)",
+
+  address: "Laboratory of Astrophysics (LASTRO), EPFL\nOffice BSP 311 (Cubotron UNIL)\nRte de la Sorge, 1015 Lausanne, Switzerland",
+  phone: "",                         // add a number here to show it
+  profiles: {
+    "GitHub": "https://github.com/antoine-rocher",
+    "NASA ADS": "https://ui.adsabs.harvard.edu/search/q=author%3A%22Rocher%2C%20Antoine%22&sort=date%20desc%2C%20bibcode%20desc",
+    "ORCID": "https://orcid.org/0000-0003-4349-6424",
+    "LinkedIn": ""
+  }
+};
+/* ========================================================================== */
+</script>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" id="brand"></a>
+    <nav>
+      <ul id="menu">
+        <li><a href="#about">About</a></li>
+        <li><a href="#research">Research</a></li>
+        <li><a href="#publications">Publications &amp; talks</a></li>
+        <li id="nav-teaching"><a href="#teaching">Teaching</a></li>
+        <li id="nav-hobbies"><a href="#hobbies">Hobbies</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn" id="theme" aria-label="Toggle dark mode">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <button class="icon-btn menu-btn" id="menu-btn" aria-label="Open menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow" id="h-inst"></p>
+        <h1 id="h-name"></h1>
+        <p class="role" id="h-role"></p>
+        <p class="tagline" id="h-tag"></p>
+        <div class="btns" id="h-btns"></div>
+      </div>
+      <div class="photo" id="h-photo"></div>
+    </div>
+    <div class="wrap">
+      <p class="sky-credit">Background: DESI's 3D map of the Universe. Credit: Claire Lamman/DESI collaboration</p>
+    </div>
+  </section>
+
+  <section class="block" id="about">
+    <div class="wrap">
+      <h2>About</h2>
+      <div class="about-grid">
+        <div id="about-text"></div>
+        <dl class="facts" id="facts"></dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="research">
+    <div class="wrap">
+      <h2>Research</h2>
+      <p class="lead">An overview of the main projects I work on.</p>
+      <div class="cards" id="cards"></div>
+    </div>
+  </section>
+
+  <section class="block" id="publications">
+    <div class="wrap">
+      <h2>Publications &amp; talks</h2>
+      <p class="lead" id="pub-lead"></p>
+      <div class="pub-tools" id="filters"></div>
+      <ul class="pubs" id="pubs"></ul>
+    </div>
+  </section>
+
+  <section class="block" id="teaching">
+    <div class="wrap">
+      <h2>Teaching &amp; Supervision</h2>
+      <p class="lead">Courses I teach at EPFL and at summer schools, and the students I supervise.</p>
+      <div class="two-col" id="activities"></div>
+    </div>
+  </section>
+
+  <section class="block" id="hobbies">
+    <div class="wrap">
+      <h2>Hobbies</h2>
+      <p class="lead">What I enjoy when I'm away from research.</p>
+      <div class="hobbies" id="hobby-list"></div>
+    </div>
+  </section>
+
+  <section class="block" id="contact" style="border-bottom:none">
+    <div class="wrap">
+      <h2>Contact</h2>
+      <p class="lead">Feel free to reach out about collaborations, talks, or questions about my work.</p>
+      <div class="contact">
+        <ul class="links-list" id="profiles"></ul>
+        <div>
+          <p><strong>Email</strong><br><span id="email"></span></p>
+          <p><strong>Office</strong><br><address id="address"></address></p>
+          <p id="phone-wrap"><strong>Phone</strong><br><span id="phone"></span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap"><span id="copy"></span><a href="#top">Back to top ↑</a><p class="video-credit" id="video-credit"></p></div></footer>
+
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  const S = SITE;
+
+  document.title = S.name + " · " + (S.role.split("·")[0].trim() || "Researcher");
+  $("brand").textContent = S.shortName || S.name;
+  $("h-inst").textContent = S.institution;
+  $("h-name").textContent = S.name;
+  $("h-role").textContent = S.role;
+  $("h-tag").textContent = S.tagline;
+
+  const btns = [];
+  if (S.cv) btns.push(`<a class="btn primary" href="${esc(S.cv)}" target="_blank" rel="noopener">Download CV</a>`);
+  btns.push(`<a class="btn" href="#publications">Publications</a>`, `<a class="btn" href="#contact">Get in touch</a>`);
+  $("h-btns").innerHTML = btns.join("");
+
+  const initials = S.name.split(/\s+/).map(w => w[0]).slice(0,2).join("").toUpperCase();
+  const showInitials = () => { $("h-photo").innerHTML = `<div class="initials" aria-hidden="true">${esc(initials)}</div>`; };
+  if (S.photo) {
+    const img = new Image(); img.className = "portrait"; img.alt = "Portrait of " + S.name;
+    img.onerror = showInitials; img.src = S.photo; $("h-photo").appendChild(img);
+  } else showInitials();
+
+  $("about-text").innerHTML = S.about.map(p => `<p>${esc(p)}</p>`).join("");
+  $("facts").innerHTML = Object.entries(S.facts).map(([k,v]) => {
+    let dd;
+    if (k.toLowerCase().includes("interest") && Array.isArray(v)) dd = `<div class="chips">${v.map(x=>`<span class="chip">${esc(x)}</span>`).join("")}</div>`;
+    else dd = Array.isArray(v) ? v.map(esc).join("<br>") : esc(v);
+    return `<dt>${esc(k)}</dt><dd>${dd}</dd>`;
+  }).join("");
+
+  $("cards").innerHTML = S.research.map(r => {
+    // a card can have one `link` (+ `linkLabel`) or a list of `links: [{label, url}]`
+    const links = (r.links || (r.link ? [{ label: r.linkLabel || "Read more", url: r.link }] : [])).filter(l => l.url);
+    const img = `<img class="thumb${r.fit === "contain" ? " contain" : ""}" src="${esc(r.image)}" alt="${esc(r.alt || "")}" loading="lazy">`;
+    return `
+    <article class="card">
+      ${r.image ? ((href => href ? `<a href="${esc(href)}" target="_blank" rel="noopener" tabindex="-1">${img}</a>` : img)(r.imageLink || (links.length === 1 ? links[0].url : ""))) : `<div class="thumb"></div>`}
+      <div class="body"><h3>${esc(r.title)}</h3><p>${esc(r.text)}</p>
+      ${r.credit ? `<p class="credit">${esc(r.credit)}</p>` : ""}
+      ${links.length ? `<div class="more-links">${links.map(l => `<a class="more" href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)} →</a>`).join("")}</div>` : ""}</div>
+    </article>`; }).join("");
+
+  // Publications & talks, with filter tabs
+  const hl = S.highlightAuthor;
+  const pubs = S.publications, talks = S.talks || [];
+  const isMajor = p => p.major !== undefined ? p.major
+    : (p.authors || "").split(",").map(x => x.trim()).slice(0, 3).includes(hl);
+  const TABS = [
+    { id: "selected", group: "papers", label: "Selected", lead: "A selection of papers that best represent my work.", items: () => pubs.filter(p => p.selected) },
+    { id: "major", group: "papers", label: "Major contributions", lead: "Papers where I am first, second or third author.", items: () => pubs.filter(isMajor) },
+    { id: "all", group: "papers", label: "All", lead: "All my papers, including DESI collaboration papers.", items: () => pubs },
+    { id: "talks-selected", group: "talks", label: "Selected talks", lead: "A selection of invited and recent talks.", items: () => talks.filter(t => t.selected) },
+    { id: "talks-all", group: "talks", label: "All talks", lead: "Talks at conferences, workshops, collaboration meetings and seminars.", items: () => talks }
+  ].filter(t => t.items().length);
+  let current = TABS[0] && TABS[0].id;
+  const pubItem = p => `
+      <li class="pub">
+        <div class="year">${esc(p.year)}</div>
+        <div>
+          <p class="title">${esc(p.title)}${p.status ? `<span class="badge">${esc(p.status)}</span>` : ""}</p>
+          <p class="authors">${hl ? esc(p.authors).split(esc(hl)).join(`<strong>${esc(hl)}</strong>`) : esc(p.authors)}</p>
+          ${p.venue ? `<p class="venue">${esc(p.venue)}</p>` : ""}
+          ${p.note ? `<p class="note">${esc(p.note)}</p>` : ""}
+          <div class="links">${Object.entries(p.links || {}).filter(([,u]) => u).map(([k,u]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(k)}</a>`).join("")}</div>
+        </div>
+      </li>`;
+  const talkItem = t => `
+      <li class="pub talk">
+        <div class="year">${esc(t.when)}</div>
+        <div>
+          <p class="title">${esc(t.title)}${t.kind && t.kind !== "contributed" ? `<span class="badge">${esc(t.kind)}</span>` : ""}</p>
+          <p class="venue">${esc(t.event)}</p>
+          ${t.place ? `<p class="place">${esc(t.place)}</p>` : ""}
+          ${t.links ? `<div class="links">${Object.entries(t.links).filter(([,u]) => u).map(([k,u]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(k)}</a>`).join("")}</div>` : ""}
+        </div>
+      </li>`;
+  const renderPubs = () => {
+    const tab = TABS.find(t => t.id === current);
+    if (!tab) return;
+    const items = tab.items();
+    $("pubs").innerHTML = tab.group === "talks" ? items.map(talkItem).join("")
+      : items.slice().sort((a, b) => b.year - a.year).map(pubItem).join("");
+    const all = S.allPublicationsLink;
+    $("pub-lead").innerHTML = esc(tab.lead) + (tab.group === "papers" && all && all.url
+      ? ` <a href="${esc(all.url)}" target="_blank" rel="noopener">${esc(all.label)} →</a>` : "");
+    document.querySelectorAll("#filters .filter").forEach(b => {
+      const on = b.dataset.t === current; b.classList.toggle("on", on); b.setAttribute("aria-pressed", on);
+    });
+  };
+  $("filters").innerHTML = ["papers", "talks"].map(g => {
+    const tabs = TABS.filter(t => t.group === g);
+    return tabs.length ? `<div class="filter-group" role="group" aria-label="${g === "papers" ? "Papers" : "Talks"}">` +
+      tabs.map(t => `<button class="filter" type="button" data-t="${t.id}">${esc(t.label)}<span class="count">${t.items().length}</span></button>`).join("") + `</div>` : "";
+  }).join("");
+  $("filters").addEventListener("click", e => { const b = e.target.closest(".filter"); if (b) { current = b.dataset.t; renderPubs(); } });
+  renderPubs();
+
+  const tl = (arr, show) => arr.map((i, k) => `<li${show && k >= show ? " hidden" : ""}><div class="when">${esc(i.when)}</div><p class="what">${esc(i.what)}</p><p class="where">${esc(i.where)}</p></li>`).join("");
+  // a group with `show: N` lists its first N items and a button to reveal the rest
+  const moreBtn = g => g.show && g.items.length > g.show
+    ? `<button class="show-more" type="button" aria-expanded="false" data-show="${g.show}" data-all="Show all ${g.items.length}" data-less="Show fewer">Show all ${g.items.length}</button>` : "";
+  const groupsOf = a => a.groups ? a.groups.filter(g => g.items && g.items.length) : (a.items && a.items.length ? [{ items: a.items }] : []);
+  const acts = (S.activities || []).filter(a => groupsOf(a).length);
+  if (!acts.length) { $("teaching").remove(); $("nav-teaching").remove(); }
+  else $("activities").innerHTML = acts.map(a => `<div><h3 class="sub">${esc(a.title)}</h3>` +
+    groupsOf(a).map(g => (g.title ? `<h4 class="subsub">${esc(g.title)}</h4>` : "") + `<ul class="timeline">${tl(g.items, g.show)}</ul>` + moreBtn(g)).join("") + `</div>`).join("");
+  $("activities").addEventListener("click", e => {
+    const b = e.target.closest(".show-more"); if (!b) return;
+    const open = b.getAttribute("aria-expanded") !== "true";
+    const items = [...b.previousElementSibling.children];
+    items.forEach((li, k) => { if (open) li.hidden = false; else if (k >= (+b.dataset.show || 0)) li.hidden = true; });
+    b.setAttribute("aria-expanded", open); b.textContent = open ? b.dataset.less : b.dataset.all;
+  });
+
+  const hobbies = S.hobbies || [];
+  if (!hobbies.length) { $("hobbies").remove(); $("nav-hobbies").remove(); }
+  else $("hobby-list").innerHTML = hobbies.map(h => `
+    <article class="hobby">
+      ${h.image ? `<img src="${esc(h.image)}" alt="${esc(h.title)}">` : ""}
+      <div class="body">
+        ${!h.image && h.icon ? `<div class="emoji" aria-hidden="true">${esc(h.icon)}</div>` : ""}
+        <h3>${esc(h.title)}</h3>${h.text ? `<p>${esc(h.text)}</p>` : ""}
+      </div>
+    </article>`).join("");
+
+  const icon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg>';
+  $("profiles").innerHTML = Object.entries(S.profiles).filter(([,u]) => u)
+    .map(([k,u]) => `<li><a href="${esc(u)}" target="_blank" rel="noopener">${icon}${esc(k)}</a></li>`).join("");
+  // the address is stored as "name [at] domain" in the source (harder for spam bots) and rebuilt here as a clickable link
+  const mail = S.email.replace(/\s*\[at\]\s*/i, "@").replace(/\s*\[dot\]\s*/gi, ".");
+  $("email").innerHTML = `<a href="mailto:${esc(mail)}">${esc(mail)}</a>`;
+  if (S.phone) $("phone").textContent = S.phone; else $("phone-wrap").remove();
+  $("address").innerHTML = esc(S.address).replace(/\n/g, "<br>");
+  $("copy").textContent = `© ${new Date().getFullYear()} ${S.name}`;
+
+  // Background video: a smaller file on phones, a still frame for reduced motion or data saving
+  const bv = S.backgroundVideo, box = document.querySelector(".bg-video");
+  if (bv && box) {
+    const small = matchMedia("(max-width: 760px)").matches;
+    const still = matchMedia("(prefers-reduced-motion: reduce)").matches || (navigator.connection && navigator.connection.saveData);
+    const files = ((small && bv.mobile) || bv.desktop || bv.mobile || []).filter(Boolean);
+    if (still || !files.length) box.innerHTML = bv.poster ? `<img src="${esc(bv.poster)}" alt="">` : "";
+    else {
+      box.innerHTML = `<video autoplay muted loop playsinline preload="auto"${bv.poster ? ` poster="${esc(bv.poster)}"` : ""}>` +
+        files.map(f => `<source src="${esc(f)}" type="video/${/\.webm(\?|$)|^data:video\/webm/.test(f) ? "webm" : "mp4"}">`).join("") + `</video>`;
+      const v = box.querySelector("video"); v.muted = true; const p = v.play(); if (p && p.catch) p.catch(() => {});
+    }
+    if (S.backgroundVideoCredit) $("video-credit").textContent = S.backgroundVideoCredit;
+  } else if (box) box.remove();
+
+  // Menu & theme
+  $("menu-btn").onclick = () => $("menu").classList.toggle("open");
+  $("menu").addEventListener("click", e => { if (e.target.tagName === "A") $("menu").classList.remove("open"); });
+  const root = document.documentElement;
+  try { const t = localStorage.getItem("theme"); if (t) root.dataset.theme = t; } catch(e){}
+  $("theme").onclick = () => {
+    const dark = root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+    root.dataset.theme = dark ? "light" : "dark";
+    try { localStorage.setItem("theme", root.dataset.theme); } catch(e){}
+  };
+
+  // Highlight current section in the nav
+  const links = [...document.querySelectorAll("nav a")];
+  const obs = new IntersectionObserver(es => es.forEach(en => {
+    if (en.isIntersecting) links.forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + en.target.id));
+  }), { rootMargin: "-45% 0px -50% 0px" });
+  document.querySelectorAll("section.block").forEach(s => obs.observe(s));
+})();
+</script>
+</body>
+</html>
